@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     gender: {
         type: String,
         validate(value) {
-            if(!["male", "feamle","other"].includes(value)) {
+            if(!["male", "female","other"].includes(value.toLowerCase())) {
                 throw new Error("gender data is not valid")
             }
         }
@@ -37,7 +37,6 @@ const userSchema = new mongoose.Schema({
 })
 userSchema.methods.getJWT = async function () {
  const user = this
- console.log("Hi J")
   // we have passed id and secrate key "DevConnect@123" which only server knows.
  const token = await jwt.sign({_id: user._id}, "DevConnect@123", { expiresIn: "1d" }) 
  return token;
